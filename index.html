@@ -84,49 +84,32 @@
             box-shadow: 0 10px 20px rgba(79, 70, 229, 0.3);
         }
 
-        /* --- Hero Section with Video Background --- */
+        /* --- Hero Section (New Pattern Background) --- */
         .hero {
-            position: relative;
-            min-height: 100vh;
+            min-height: 80vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
+            background: radial-gradient(circle at top right, #2a22a3, var(--dark));
             color: var(--white);
-            padding: 100px 5% 50px;
-            overflow: hidden;
+            padding: 150px 5% 80px;
+            position: relative;
+            z-index: 1;
         }
 
-        /* Video Setup */
-        .hero-video {
+        /* Gradient Wave Accent */
+        .hero::after {
+            content: '';
             position: absolute;
-            top: 50%;
-            left: 50%;
-            min-width: 100%;
-            min-height: 100%;
-            width: auto;
-            height: auto;
-            transform: translateX(-50%) translateY(-50%);
-            z-index: -2;
-            object-fit: cover;
-        }
-
-        /* Dark overlay so text is readable over the video */
-        .hero-overlay {
-            position: absolute;
-            top: 0;
+            bottom: -2px;
             left: 0;
             width: 100%;
-            height: 100%;
-            background: rgba(15, 23, 42, 0.7); 
+            height: 100px;
+            background-color: var(--light);
+            clip-path: polygon(100% 0, 0% 100%, 100% 100%);
             z-index: -1;
-        }
-
-        /* Content inside Hero */
-        .hero-content {
-            z-index: 1;
-            position: relative;
         }
 
         .hero h1 {
@@ -153,18 +136,57 @@
         .hero p {
             font-size: 1.2rem;
             max-width: 600px;
-            margin: 0 auto 40px auto;
+            margin-bottom: 40px;
             color: #cbd5e1;
         }
 
-        /* Mute/Unmute Toggle Button */
+        /* --- NEW: Separate Video Section --- */
+        .video-section {
+            background-color: var(--light);
+            padding: 20px 5% 80px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .video-block {
+            max-width: 1000px;
+            width: 100%;
+            background: var(--white);
+            border-radius: 20px;
+            padding: 10px; /* Border padding */
+            box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: 1fr;
+        }
+
+        .video-container {
+            position: relative;
+            width: 100%;
+            border-radius: 15px;
+            overflow: hidden;
+            /* Force 16:9 Aspect Ratio */
+            padding-top: 56.25%; 
+        }
+
+        .video-container video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Mute Button Overlay on the Video Frame */
         .sound-toggle {
             position: absolute;
-            bottom: 40px;
-            right: 5%;
-            background: rgba(255, 255, 255, 0.2);
+            bottom: 20px;
+            right: 20px;
+            background: rgba(15, 23, 42, 0.6);
             backdrop-filter: blur(5px);
-            border: 1px solid rgba(255, 255, 255, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             color: var(--white);
             width: 50px;
             height: 50px;
@@ -176,10 +198,11 @@
             z-index: 10;
             transition: all 0.3s ease;
             font-size: 1.2rem;
+            border: none;
         }
 
         .sound-toggle:hover {
-            background: rgba(255, 255, 255, 0.4);
+            background: var(--primary);
             transform: scale(1.1);
         }
 
@@ -281,7 +304,7 @@
         .price-features li { margin-bottom: 10px; padding-left: 25px; position: relative; }
         .price-features li::before { content: '✓'; color: var(--primary); position: absolute; left: 0; font-weight: bold; }
 
-        /* --- NEW, HIGH-END FOOTER --- */
+        /* --- FOOTER --- */
         footer { 
             background: #0B1120; 
             color: var(--white); 
@@ -330,7 +353,6 @@
             transform: translateX(5px);
         }
 
-        /* Footer Social Icons */
         .social-links {
             display: flex;
             gap: 15px;
@@ -356,7 +378,6 @@
             transform: translateY(-3px);
         }
 
-        /* Footer Newsletter */
         .newsletter-form {
             display: flex;
             margin-top: 15px;
@@ -415,11 +436,13 @@
             nav { flex-direction: column; padding: 15px 5%; gap: 15px; }
             .nav-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; }
             .nav-links a { margin-left: 0; font-size: 0.9rem; }
-            .hero { padding-top: 160px; }
+            .hero { padding-top: 160px; min-height: 60vh; }
             .hero h1 { font-size: 2.5rem; min-height: 80px; }
             
-            /* Move toggle slightly on mobile */
-            .sound-toggle { bottom: 20px; right: 20px; }
+            /* Remove aspect ratio forcing padding on mobile to save screen height */
+            .video-container { padding-top: 0; height: 250px; }
+            .video-block { padding: 5px; }
+            .sound-toggle { width: 40px; height: 40px; font-size: 1rem; bottom: 10px; right: 10px; }
 
             section { padding: 60px 5%; }
             .section-title { font-size: 2rem; }
@@ -452,22 +475,25 @@
     </nav>
 
     <section class="hero">
-        <video id="heroVideo" class="hero-video" autoplay loop muted playsinline>
-            <source src="VK.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
-        
-        <div class="hero-overlay"></div>
-
         <div class="hero-content">
             <h1 class="hidden">Speak <span class="dynamic-text"></span> <br>Like a Native.</h1>
             <p class="hidden">Master the world's most sought-after languages with our AI-driven, immersive learning experience designed for serious learners.</p>
             <a href="#pricing" class="btn hidden">Start Your Free Trial</a>
         </div>
+    </section>
 
-        <button id="soundBtn" class="sound-toggle" aria-label="Toggle Sound">
-            🔇
-        </button>
+    <section class="video-section">
+        <div class="video-block hidden">
+            <div class="video-container">
+                <video id="heroVideo" autoplay loop muted playsinline>
+                    <source src="VK.mp4_bbb" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <button id="soundBtn" class="sound-toggle" aria-label="Toggle Sound">
+                    🔇
+                </button>
+            </div>
+        </div>
     </section>
 
     <section class="stats-banner">
@@ -640,7 +666,7 @@
     </footer>
 
     <script>
-        // 1. Scroll Animations
+        // Scroll Animations
         const observer = new IntersectionObserver((entries) => {
             entries.forEach((entry) => {
                 if (entry.isIntersecting) {
@@ -650,7 +676,7 @@
         });
         document.querySelectorAll('.hidden').forEach((el) => observer.observe(el));
 
-        // 2. Typing Effect for Hero Section
+        // Typing Effect for Hero Section
         const textElement = document.querySelector('.dynamic-text');
         const words = ['Russian', 'Italian', 'English', 'German', 'Hindi'];
         let wordIndex = 0;
@@ -669,10 +695,9 @@
 
             let speed = isDeleting ? 100 : 200;
 
-            // FIXED TYPO HERE:
             if (!isDeleting && charIndex === currentWord.length) {
                 speed = 2000; 
-                isDeleting = true; 
+                isDeleting = true;
             } else if (isDeleting && charIndex === 0) {
                 isDeleting = false;
                 wordIndex = (wordIndex + 1) % words.length;
@@ -683,31 +708,31 @@
         }
         type(); // Start typing effect
 
-        // 3. FAQ Accordion Logic
+        // FAQ Accordion Logic
         const faqItems = document.querySelectorAll('.faq-item');
         faqItems.forEach(item => {
             const question = item.querySelector('.faq-question');
             question.addEventListener('click', () => {
-                // Close others
                 faqItems.forEach(otherItem => {
                     if (otherItem !== item) otherItem.classList.remove('active');
                 });
-                // Toggle current
                 item.classList.toggle('active');
             });
         });
 
-        // 4. Video Mute/Unmute Logic
+        // UPDATE: Adjusted Video Mute/Unmute Logic to target correctly
         const heroVideo = document.getElementById('heroVideo');
         const soundBtn = document.getElementById('soundBtn');
 
         soundBtn.addEventListener('click', () => {
             if (heroVideo.muted) {
                 heroVideo.muted = false;
-                soundBtn.textContent = '🔊'; 
+                soundBtn.textContent = '🔊'; // Change to unmuted icon
+                soundBtn.setAttribute('aria-label', 'Mute Sound');
             } else {
                 heroVideo.muted = true;
-                soundBtn.textContent = '🔇'; 
+                soundBtn.textContent = '🔇'; // Change to muted icon
+                soundBtn.setAttribute('aria-label', 'Unmute Sound');
             }
         });
     </script>
