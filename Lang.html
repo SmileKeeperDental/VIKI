@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Viki Pro | Master New Languages</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4F46E5;
+            --secondary: #EC4899;
+            --dark: #0F172A;
+            --light: #F8FAFC;
+            --gray: #F1F5F9;
+            --white: #FFFFFF;
+            --text-muted: #64748B;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* --- Navbar --- */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 5%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            margin-left: 30px;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .btn {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--white);
+            padding: 12px 28px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: inline-block;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(79, 70, 229, 0.3);
+        }
+
+        /* --- Hero Section --- */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: radial-gradient(circle at top right, #1e1b4b, var(--dark));
+            color: var(--white);
+            padding: 100px 5% 50px;
+        }
+
+        .hero h1 {
+            font-size: 4.5rem;
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+
+        .hero h1 span {
+            background: linear-gradient(135deg, #818cf8, #f472b6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin-bottom: 40px;
+            color: #cbd5e1;
+        }
+
+        /* --- Common Section Styles --- */
+        section {
+            padding: 100px 5%;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto 60px auto;
+            font-size: 1.1rem;
+        }
+
+        /* --- Method / About Section --- */
+        .method-section {
+            background: var(--white);
+        }
+
+        .method-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .method-card {
+            padding: 30px;
+            background: var(--light);
+            border-radius: 15px;
+            text-align: left;
+            border-left: 5px solid var(--primary);
+        }
+
+        .method-card h3 {
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+        }
+
+        /* --- Languages Section --- */
+        .languages-section {
+            background: var(--gray);
+            text-align: center;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: var(--white);
+            padding: 40px 20px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            transition: all 0.4s ease;
+            cursor: pointer;
+            border: 1px solid #e2e8f0;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            border-color: var(--primary);
+        }
+
+        .flag {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+
+        /* --- Instructor Section --- */
+        .instructor-section {
+            background: var(--white);
+        }
+
+        .instructor-container {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 60px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .instructor-image {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .instructor-image img {
+            width: 100%;
+            max-width: 500px;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            display: block;
+            margin: 0 auto;
+        }
+
+        .instructor-content {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .instructor-content h2 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+
+        .instructor-content h3 {
+            font-size: 1.2rem;
+            color: var(--primary);
+            margin-bottom: 25px;
+            font-weight: 600;
+        }
+
+        .instructor-content p {
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+
+        .language-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 30px;
+        }
+
+        .badge {
+            background: var(--gray);
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--dark);
+            border: 1px solid #e2e8f0;
+        }
+
+        /* --- Testimonials --- */
+        .testimonials-section {
+            background: var(--gray);
+        }
+
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .testimonial {
+            padding: 40px;
+            background: var(--dark);
+            color: var(--white);
+            border-radius: 20px;
+            position: relative;
+        }
+
+        .testimonial p {
+            font-style: italic;
+            margin-bottom: 20px;
+            color: #cbd5e1;
+        }
+
+        .testimonial h4 {
+            color: var(--secondary);
+        }
+
+        /* --- Pricing Section --- */
+        .pricing-section {
+            background: var(--light);
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .price-card {
+            background: var(--white);
+            padding: 50px 30px;
+            border-radius: 20px;
+            text-align: center;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+
+        .price-card.featured {
+            transform: scale(1.05);
+            border: 2px solid var(--primary);
+            position: relative;
+        }
+
+        .price-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+
+        .price {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            color: var(--dark);
+        }
+
+        .price span {
+            font-size: 1rem;
+            color: var(--text-muted);
+        }
+
+        .price-features {
+            list-style: none;
+            margin-bottom: 30px;
+            text-align: left;
+        }
+
+        .price-features li {
+            margin-bottom: 10px;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .price-features li::before {
+            content: '✓';
+            color: var(--primary);
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        /* --- Footer --- */
+        footer {
+            background: var(--dark);
+            color: var(--white);
+            padding: 80px 5% 30px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+            border-bottom: 1px solid #334155;
+            padding-bottom: 40px;
+        }
+
+        .footer-col h3 {
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+            color: var(--white);
+        }
+
+        .footer-col p, .footer-col a {
+            color: #94a3b8;
+            text-decoration: none;
+            margin-bottom: 10px;
+            display: block;
+            transition: color 0.3s ease;
+        }
+
+        .footer-col a:hover {
+            color: var(--secondary);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            color: #64748B;
+        }
+
+        /* Scroll Animations */
+        .hidden {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s ease-out;
+        }
+
+        .show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Mobile adjustments */
+        @media (max-width: 768px) {
+            .instructor-container {
+                flex-direction: column;
+                text-align: center;
+            }
+            .language-badges {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">Viki Pro</div>
+        <div class="nav-links">
+            <a href="#about">Method</a>
+            <a href="#languages">Languages</a>
+            <a href="#instructor">Instructor</a>
+            <a href="#pricing">Pricing</a>
+            <a href="#contact" class="btn">Contact</a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <h1 class="hidden">Speak the world's languages <br><span>Like a Native.</span></h1>
+        <p class="hidden">Master Russian, Italian, English, German, and Hindi with our AI-driven, immersive learning experience designed for serious learners.</p>
+        <a href="#pricing" class="btn hidden">Start Your Free Trial</a>
+    </section>
+
+    <section id="about" class="method-section">
+        <h2 class="section-title hidden">The Viki Pro Method</h2>
+        <p class="section-subtitle hidden">We don't just teach vocabulary. We rewire your brain for fluency using advanced learning science.</p>
+        <div class="method-grid">
+            <div class="method-card hidden">
+                <h3>🎙️ AI Pronunciation Scoring</h3>
+                <p>Speak into your microphone and our advanced AI will instantly rate your accent and provide feedback to ensure you sound like a local.</p>
+            </div>
+            <div class="method-card hidden">
+                <h3>🧠 Spaced Repetition</h3>
+                <p>Our algorithm tracks the words you struggle with and brings them back at the exact moment you are about to forget them.</p>
+            </div>
+            <div class="method-card hidden">
+                <h3>🎬 Native Context</h3>
+                <p>Learn through real-world scenarios. Order coffee in Rome, navigate the Moscow metro, or ace a business meeting in Berlin.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="languages" class="languages-section">
+        <h2 class="section-title hidden">Choose Your Path</h2>
+        <p class="section-subtitle hidden">Select from our five expertly crafted language tracks.</p>
+        <div class="grid">
+            <div class="card hidden">
+                <span class="flag">🇷🇺</span>
+                <h3>Russian</h3>
+                <p>Unlock the Cyrillic alphabet.</p>
+            </div>
+            <div class="card hidden">
+                <span class="flag">🇮🇹</span>
+                <h3>Italian</h3>
+                <p>Learn the language of art & food.</p>
+            </div>
+            <div class="card hidden">
+                <span class="flag">🇬🇧</span>
+                <h3>English</h3>
+                <p>Master global communication.</p>
+            </div>
+            <div class="card hidden">
+                <span class="flag">🇩🇪</span>
+                <h3>German</h3>
+                <p>Speak with precision and clarity.</p>
+            </div>
+            <div class="card hidden">
+                <span class="flag">🇮🇳</span>
+                <h3>Hindi</h3>
+                <p>Connect with a billion voices.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="instructor" class="instructor-section">
+        <div class="instructor-container">
+            <div class="instructor-image hidden">
+                <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Victoria - Lead Instructor">
+            </div>
+            <div class="instructor-content hidden">
+                <h2>Meet Victoria</h2>
+                <h3>Lead Instructor & Master Polyglot</h3>
+                <p>Victoria has spent the last 15 years traveling the globe and mastering the art of language acquisition. Finding traditional textbook methods slow and uninspiring, she developed the core framework that powers the Viki Pro algorithm today.</p>
+                <p>She personally designed the curriculum to ensure you learn how native speakers <em>actually</em> talk, not just how to pass a grammar test. Her mission is to help you break down cultural barriers and communicate with confidence.</p>
+                
+                <div class="language-badges">
+                    <span class="badge">🇷🇺 Fluent in Russian</span>
+                    <span class="badge">🇮🇹 Fluent in Italian</span>
+                    <span class="badge">🇬🇧 Native English</span>
+                    <span class="badge">🇩🇪 Fluent in German</span>
+                    <span class="badge">🇮🇳 Conversational Hindi</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="testimonials" class="testimonials-section">
+        <h2 class="section-title hidden">Hear From Our Students</h2>
+        <p class="section-subtitle hidden">Join thousands of users who have achieved fluency with Viki Pro.</p>
+        <div class="testimonial-grid">
+            <div class="testimonial hidden">
+                <p>"Victoria's curriculum combined with the AI tools changed everything for me. I tried other apps for years to learn German, but nothing stuck. Viki Pro had me speaking confidently in 3 months."</p>
+                <h4>- Sarah M., New York</h4>
+            </div>
+            <div class="testimonial hidden">
+                <p>"The Russian pronunciation tool is a lifesaver. It corrected my accent in real-time. I finally feel comfortable speaking with my in-laws!"</p>
+                <h4>- David L., London</h4>
+            </div>
+        </div>
+    </section>
+
+    <section id="pricing" class="pricing-section">
+        <h2 class="section-title hidden">Simple, Transparent Pricing</h2>
+        <p class="section-subtitle hidden">Invest in your future. Choose the plan that fits your goals.</p>
+        <div class="pricing-grid">
+            <div class="price-card hidden">
+                <h3>Basic</h3>
+                <div class="price">$9<span>/mo</span></div>
+                <ul class="price-features">
+                    <li>Access to 1 Language</li>
+                    <li>Basic Vocabulary Drills</li>
+                    <li>Community Forum Access</li>
+                </ul>
+                <a href="#" class="btn" style="width: 100%; background: var(--dark);">Choose Basic</a>
+            </div>
+            <div class="price-card featured hidden">
+                <h3>Pro (Most Popular)</h3>
+                <div class="price">$19<span>/mo</span></div>
+                <ul class="price-features">
+                    <li>Access to All 5 Languages</li>
+                    <li>AI Pronunciation Scoring</li>
+                    <li>Spaced Repetition System</li>
+                    <li>Offline Mode</li>
+                </ul>
+                <a href="#" class="btn" style="width: 100%;">Get Viki Pro</a>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contact">
+        <div class="footer-content">
+            <div class="footer-col">
+                <h3 class="logo" style="font-size: 1.5rem; margin-bottom: 15px;">Viki Pro</h3>
+                <p>Empowering global communication through high-end, effective language education.</p>
+            </div>
+            
+            <div class="footer-col">
+                <h3>Quick Links</h3>
+                <a href="#about">Our Method</a>
+                <a href="#languages">Courses</a>
+                <a href="#instructor">About Victoria</a>
+                <a href="#pricing">Pricing</a>
+            </div>
+
+            <div class="footer-col">
+                <h3>Legal</h3>
+                <a href="#">Terms of Service</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Cookie Policy</a>
+            </div>
+
+            <div class="footer-col">
+                <h3>Contact Us</h3>
+                <p>📍 123 Polyglot Avenue, Tech District, San Francisco, CA 94105</p>
+                <p>📞 +1 (555) 019-8472</p>
+                <p>✉️ hello@vikipro.com</p>
+                <p>🕒 Mon-Fri, 9am - 6pm PST</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Viki Pro Language Learning. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('show');
+                }
+            });
+        });
+
+        const hiddenElements = document.querySelectorAll('.hidden');
+        hiddenElements.forEach((el) => observer.observe(el));
+    </script>
+</body>
+</html>
