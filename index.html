@@ -327,6 +327,22 @@
             border-bottom: 1px solid #1E293B; 
         }
 
+        /* --- NEW: Footer Logo Styling --- */
+        .footer-logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .footer-logo-img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--primary);
+        }
+
         .footer-col h3 { 
             margin-bottom: 25px; 
             font-size: 1.2rem; 
@@ -439,7 +455,6 @@
             .hero { padding-top: 160px; min-height: 60vh; }
             .hero h1 { font-size: 2.5rem; min-height: 80px; }
             
-            /* Remove aspect ratio forcing padding on mobile to save screen height */
             .video-container { padding-top: 0; height: 250px; }
             .video-block { padding: 5px; }
             .sound-toggle { width: 40px; height: 40px; font-size: 1rem; bottom: 10px; right: 10px; }
@@ -450,6 +465,7 @@
             .method-grid, .pricing-grid { grid-template-columns: 1fr; }
             
             .footer-content { grid-template-columns: 1fr; gap: 40px; text-align: center; }
+            .footer-logo-container { justify-content: center; } /* Center logo on mobile */
             .footer-col a:hover { transform: none; }
             .social-links { justify-content: center; }
             
@@ -624,8 +640,11 @@
         <div class="footer-content">
             
             <div class="footer-col brand-col">
-                <h3 class="logo" style="margin-bottom: 15px;">Viki Pro</h3>
-                <p>Empowering global communication through high-end, immersive language education. Start speaking like a native today.</p>
+                <div class="footer-logo-container">
+                    <img src="Vikis_World.jpeg" alt="Viki's World Logo" class="footer-logo-img">
+                    <h3 class="logo" style="margin-bottom: 0;">Viki Pro</h3>
+                </div>
+                <p style="margin-top: 15px;">Empowering global communication through high-end, immersive language education. Start speaking like a native today.</p>
                 <div class="social-links">
                     <a href="#" aria-label="Twitter">X</a>
                     <a href="#" aria-label="LinkedIn">In</a>
@@ -720,18 +739,18 @@
             });
         });
 
-        // UPDATE: Adjusted Video Mute/Unmute Logic to target correctly
+        // Video Mute/Unmute Logic
         const heroVideo = document.getElementById('heroVideo');
         const soundBtn = document.getElementById('soundBtn');
 
         soundBtn.addEventListener('click', () => {
             if (heroVideo.muted) {
                 heroVideo.muted = false;
-                soundBtn.textContent = '🔊'; // Change to unmuted icon
+                soundBtn.textContent = '🔊'; 
                 soundBtn.setAttribute('aria-label', 'Mute Sound');
             } else {
                 heroVideo.muted = true;
-                soundBtn.textContent = '🔇'; // Change to muted icon
+                soundBtn.textContent = '🔇'; 
                 soundBtn.setAttribute('aria-label', 'Unmute Sound');
             }
         });
