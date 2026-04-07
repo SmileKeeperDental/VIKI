@@ -415,14 +415,71 @@
             transform: translateY(0);
         }
 
-        /* Mobile adjustments */
+        /* =========================================
+           📱 MOBILE RESPONSIVE MEDIA QUERIES 📱
+           ========================================= */
         @media (max-width: 768px) {
+            /* Fix Navbar */
+            nav {
+                flex-direction: column;
+                padding: 15px 5%;
+                gap: 15px;
+            }
+            .nav-links {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 15px;
+            }
+            .nav-links a {
+                margin-left: 0;
+                font-size: 0.9rem;
+            }
+            .btn {
+                padding: 8px 20px;
+                font-size: 0.9rem;
+            }
+
+            /* Fix Hero Text */
+            .hero {
+                padding-top: 160px; /* Leave room for stacked navbar */
+            }
+            .hero h1 {
+                font-size: 2.5rem; /* Shrunk from 4.5rem */
+            }
+            .hero p {
+                font-size: 1rem;
+            }
+
+            /* Fix Section Spacing & Titles */
+            section {
+                padding: 60px 5%; /* Shrunk from 100px */
+            }
+            .section-title {
+                font-size: 2rem;
+            }
+
+            /* Force 1-Column Grids so nothing squeezes */
+            .method-grid, 
+            .testimonial-grid, 
+            .pricing-grid, 
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+
+            /* Fix Instructor Section */
             .instructor-container {
                 flex-direction: column;
                 text-align: center;
+                gap: 30px;
             }
             .language-badges {
                 justify-content: center;
+            }
+
+            /* Fix Featured Pricing Card Overlay */
+            .price-card.featured {
+                transform: scale(1); /* Removes zoom so it doesn't break screen edges */
             }
         }
     </style>
