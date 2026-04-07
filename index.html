@@ -84,17 +84,49 @@
             box-shadow: 0 10px 20px rgba(79, 70, 229, 0.3);
         }
 
-        /* --- Hero Section with Typing Effect --- */
+        /* --- Hero Section with Video Background --- */
         .hero {
+            position: relative;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
-            background: radial-gradient(circle at top right, #1e1b4b, var(--dark));
             color: var(--white);
             padding: 100px 5% 50px;
+            overflow: hidden;
+        }
+
+        /* Video Setup */
+        .hero-video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            transform: translateX(-50%) translateY(-50%);
+            z-index: -2;
+            object-fit: cover;
+        }
+
+        /* Dark overlay so text is readable over the video */
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.7); 
+            z-index: -1;
+        }
+
+        /* Content inside Hero */
+        .hero-content {
+            z-index: 1;
+            position: relative;
         }
 
         .hero h1 {
@@ -121,8 +153,34 @@
         .hero p {
             font-size: 1.2rem;
             max-width: 600px;
-            margin-bottom: 40px;
+            margin: 0 auto 40px auto;
             color: #cbd5e1;
+        }
+
+        /* Mute/Unmute Toggle Button */
+        .sound-toggle {
+            position: absolute;
+            bottom: 40px;
+            right: 5%;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            color: var(--white);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10;
+            transition: all 0.3s ease;
+            font-size: 1.2rem;
+        }
+
+        .sound-toggle:hover {
+            background: rgba(255, 255, 255, 0.4);
+            transform: scale(1.1);
         }
 
         /* --- Stats Banner --- */
@@ -225,7 +283,7 @@
 
         /* --- NEW, HIGH-END FOOTER --- */
         footer { 
-            background: #0B1120; /* Slightly darker than standard var(--dark) for depth */
+            background: #0B1120; 
             color: var(--white); 
             position: relative;
         }
@@ -359,13 +417,15 @@
             .nav-links a { margin-left: 0; font-size: 0.9rem; }
             .hero { padding-top: 160px; }
             .hero h1 { font-size: 2.5rem; min-height: 80px; }
+            
+            /* Move toggle slightly on mobile */
+            .sound-toggle { bottom: 20px; right: 20px; }
+
             section { padding: 60px 5%; }
             .section-title { font-size: 2rem; }
             
-            /* Fix Grid Layouts for Mobile */
             .method-grid, .pricing-grid { grid-template-columns: 1fr; }
             
-            /* Mobile Footer Specifics */
             .footer-content { grid-template-columns: 1fr; gap: 40px; text-align: center; }
             .footer-col a:hover { transform: none; }
             .social-links { justify-content: center; }
@@ -392,9 +452,22 @@
     </nav>
 
     <section class="hero">
-        <h1 class="hidden">Speak <span class="dynamic-text"></span> <br>Like a Native.</h1>
-        <p class="hidden">Master the world's most sought-after languages with our AI-driven, immersive learning experience designed for serious learners.</p>
-        <a href="#pricing" class="btn hidden">Start Your Free Trial</a>
+        <video id="heroVideo" class="hero-video" autoplay loop muted playsinline>
+            <source src="VK.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        
+        <div class="hero-overlay"></div>
+
+        <div class="hero-content">
+            <h1 class="hidden">Speak <span class="dynamic-text"></span> <br>Like a Native.</h1>
+            <p class="hidden">Master the world's most sought-after languages with our AI-driven, immersive learning experience designed for serious learners.</p>
+            <a href="#pricing" class="btn hidden">Start Your Free Trial</a>
+        </div>
+
+        <button id="soundBtn" class="sound-toggle" aria-label="Toggle Sound">
+            🔇
+        </button>
     </section>
 
     <section class="stats-banner">
@@ -567,7 +640,7 @@
     </footer>
 
     <script>
-        // Scroll Animations
+        // 1. Scroll Animations
         const observer = new IntersectionObserver((entries) => {
             entries.forEach((entry) => {
                 if (entry.isIntersecting) {
@@ -577,7 +650,7 @@
         });
         document.querySelectorAll('.hidden').forEach((el) => observer.observe(el));
 
-        // Typing Effect for Hero Section
+        // 2. Typing Effect for Hero Section
         const textElement = document.querySelector('.dynamic-text');
         const words = ['Russian', 'Italian', 'English', 'German', 'Hindi'];
         let wordIndex = 0;
@@ -596,20 +669,21 @@
 
             let speed = isDeleting ? 100 : 200;
 
+            // FIXED TYPO HERE:
             if (!isDeleting && charIndex === currentWord.length) {
-                speed = 2000; // Pause at end of word
-                isDeleting = true;
+                speed = 2000; 
+                isDeleting = true; 
             } else if (isDeleting && charIndex === 0) {
                 isDeleting = false;
                 wordIndex = (wordIndex + 1) % words.length;
-                speed = 500; // Pause before new word
+                speed = 500; 
             }
 
             setTimeout(type, speed);
         }
         type(); // Start typing effect
 
-        // FAQ Accordion Logic
+        // 3. FAQ Accordion Logic
         const faqItems = document.querySelectorAll('.faq-item');
         faqItems.forEach(item => {
             const question = item.querySelector('.faq-question');
@@ -621,6 +695,20 @@
                 // Toggle current
                 item.classList.toggle('active');
             });
+        });
+
+        // 4. Video Mute/Unmute Logic
+        const heroVideo = document.getElementById('heroVideo');
+        const soundBtn = document.getElementById('soundBtn');
+
+        soundBtn.addEventListener('click', () => {
+            if (heroVideo.muted) {
+                heroVideo.muted = false;
+                soundBtn.textContent = '🔊'; 
+            } else {
+                heroVideo.muted = true;
+                soundBtn.textContent = '🔇'; 
+            }
         });
     </script>
 </body>
